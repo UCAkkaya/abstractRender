@@ -1,8 +1,8 @@
-//Code for abstract renderer for the webcam data
+//Code for a simple abstract renderer for the webcam data
 
 let videoIn;
 let canvasOut;
-let vScale = 30;
+let vScale = 30; //scale ratio
 let renderPick;
 
 function setup() {
@@ -33,7 +33,7 @@ function draw() {
 
   background(3);
 
-  videoIn.loadPixels();
+  videoIn.loadPixels(); // read webcam pixel information 
 
   for (var y = 0; y < videoIn.height; y++) {
     for (var x = 0; x < videoIn.width; x++) {
@@ -41,15 +41,16 @@ function draw() {
       var r = videoIn.pixels[index + 0];
       var g = videoIn.pixels[index + 1];
       var b = videoIn.pixels[index + 2];
-      var bright = (r + g + b) / 3;
-      var w = map(bright, 0, thresSlider.value(), 0, vScale);
+      var bright = (r + g + b) / 3; //brightness value
+      var w = map(bright, 0, thresSlider.value(), 0, vScale); //brightness threshold slider
       var movementAdder = map(bright, 0, 255, 0, 75);
-      stroke(r, g, b, bright);
+      stroke(r, g, b, bright); //line defs 
       strokeCap(ROUND);
       noFill();
 
+      //draw depending on the render type
       renderType(renderPick.value(), movementAdder, vScale,
-        x, y, w, bright, r, g, b);
+        x, y, w, bright, r, g, b); 
 
     }
   }
@@ -105,7 +106,7 @@ function abstractLines(bright, vScale, x, y) {
 }
 
 
-function randShape(vScale, x, y, w, r, g, b) {
+function randShape(vScale, x, y, w, r, g, b) { //randomly choose a draw shape
 
   fill(r, g, b, 255);
 
